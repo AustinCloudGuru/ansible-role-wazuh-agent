@@ -35,7 +35,7 @@
       -----END CERTIFICATE-----
     wazuh_env:
       WAZUH_MANAGER: 10.0.0.1
-      WAZUH_REGISTRATION_CA: rootCA.pem
+      WAZUH_REGISTRATION_CA: "rootCA.pem"
   tasks:
     - name: "Include Ansible Role"
       ansible.builtin.include_role:
