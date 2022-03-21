@@ -8,24 +8,12 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: amazonlinux2
-    image: amazonlinux:latest
-    privileged: True
+  - name: instance
+    image: ${MOLECULE_DISTRO}
+    privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /sbin/init
-  - name: ubuntu_18.04
-    image: ubuntu:18.04
-    privileged: True
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /sbin/init
-  - name: Centos7
-    image: centos:7
-    privileged: True
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /sbin/init
+    command: /lib/systemd/systemd
 provisioner:
   name: ansible
 verifier:
