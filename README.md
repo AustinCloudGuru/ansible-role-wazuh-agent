@@ -1,8 +1,8 @@
-Role Name
+Ansible Role: wazuh-agent
 =========
-[![Molecule](https://github.com/austincloudguru/ansible-role-template/workflows/Molecule/badge.svg?event=push)](https://github.com/austincloudguru/ansible-role-template/actions?query=workflow%3AMolecule)
-![Latest Version](https://img.shields.io/github/v/tag/austincloudguru/ansible-role-template?sort=semver&label=Latest%20Version) 
-[![License](https://img.shields.io/github/license/austincloudguru/ansible-role-template)](https://github.com/austincloudguru/ansible-role-template/blob/master/LICENSE)
+[![Molecule](https://github.com/austincloudguru/ansible-role-wazuh-agent/workflows/Molecule/badge.svg?event=push)](https://github.com/austincloudguru/ansible-role-wazuh-agent/actions?query=workflow%3AMolecule)
+![Latest Version](https://img.shields.io/github/v/tag/austincloudguru/ansible-role-wazuh-agent?sort=semver&label=Latest%20Version) 
+[![License](https://img.shields.io/github/license/austincloudguru/ansible-role-wazuh-agent)](https://github.com/austincloudguru/ansible-role-wazuh-agent/blob/master/LICENSE)
 
 A brief description of the role goes here.
 
@@ -37,7 +37,7 @@ passed in as parameters) is always nice for users too:
 
     - hosts: servers
       roles:
-         - { role: ansible-role-template, x: 42 }
+         - { role: ansible-role-wazuh-agent, x: 42 }
 
 License
 -------

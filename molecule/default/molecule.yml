@@ -10,22 +10,22 @@ lint: |
 platforms:
   - name: amazonlinux2
     image: amazonlinux:latest
-    privileged: true
+    privileged: True
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
+    command: /sbin/init
   - name: ubuntu_18.04
     image: ubuntu:18.04
-    privileged: true
+    privileged: True
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd #
+    command: /sbin/init
   - name: Centos7
     image: centos:7
-    privileged: true
+    privileged: True
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd #
+    command: /sbin/init
 provisioner:
   name: ansible
 verifier:

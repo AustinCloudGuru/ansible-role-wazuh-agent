@@ -2,7 +2,40 @@
 - name: Converge
   hosts: all
   vars:
-
+    wazuh_certificate: |
+      -----BEGIN CERTIFICATE-----
+      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
+      -----END CERTIFICATE-----
+    wazuh_env:
+      WAZUH_MANAGER: 10.0.0.1
+      WAZUH_REGISTRATION_CA: rootCA.pem
   tasks:
     - name: "Include Ansible Role"
       ansible.builtin.include_role:

@@ -6,3 +6,21 @@
   vars_files:
     - "../../defaults/main.yml"
   tasks:
+    - name: Verify that the Wazuh Manager IP address is present
+      ansible.builtin.lineinfile:
+        path: /var/ossec/etc/ossec.conf
+        regexp: "<address>10.0.0.1</address>"
+        state: absent
+      check_mode: yes
+      register: reg_authorized
+      changed_when: false
+
+    - name: Verify auth_principals is installed
+      stat:
+        path: /var/ossec/etc/rootCA.pem
+      register: reg_cert
+
+    - name: Assert User exists
+      assert:
+        that:
+          - 'reg_cert.stat.exists'

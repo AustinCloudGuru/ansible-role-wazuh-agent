@@ -1,2 +1,64 @@
 ---
-# tasks file for ansible-role-template
+- name: Include OS Specific Variables
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install Extra Packages
+  ansible.builtin.package:
+    name: "{{ package_list }}"
+    state: present
+  become: true
+
+- name: Prepare Enterprise Linux Based Systems for Installation
+  block:
+    - name: Import the Repo Key
+      ansible.builtin.rpm_key:
+        state: present
+        key: http://packages.wazuh.com/key/GPG-KEY-WAZUH
+    - name: Add the Wazuh Repo to the repo list
+      ansible.builtin.yum_repository:
+        name: wazuh
+        description: Wazuh Repository
+        baseurl: https://packages.wazuh.com/4.x/yum/ 
+        gpgcheck: yes
+        gpgkey: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+
+  when: ansible_os_family == "RedHat"
+
+- name: Prepare Debian Based Systems for Installation
+  block:
+    - name: Import the Repo Key
+      ansible.builtin.apt_key:
+        state: present
+        url: http://packages.wazuh.com/key/GPG-KEY-WAZUH
+    - name: Add the Wazuh Repo to the apt list
+      ansible.builtin.apt_repository:
+        repo: deb https://packages.wazuh.com/4.x/apt/ stable main
+        state: present
+        filename: wazuh
+  when: ansible_os_family == "Debian"
+
+- name: Install the Wazuh Package
+  ansible.builtin.package:
+    name: wazuh-agent{{ package_delimiter }}{{ wazuh_version }}
+    state: present
+  environment: "{{ wazuh_env }}"
+
+- name: Install Wazuh Registration CA
+  ansible.builtin.copy:
+    content: "{{ wazuh_certificate }}"
+    dest: /var/ossec/etc/rootCA.pem
+    owner: root
+    group: root
+    mode: 0600
+    backup: yes
+  when: wazuh_certificate is defined
+
+- name: enable wazuh-agent
+  systemd:
+    name: wazuh-agent
+    enabled: true
+
+- name: Reload systemctl
+  systemd:
+    daemon_reload: true
+  when: not ami_builder 
