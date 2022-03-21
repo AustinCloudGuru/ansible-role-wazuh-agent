@@ -54,11 +54,11 @@
   when: wazuh_certificate is defined
 
 - name: enable wazuh-agent
-  systemd:
+  ansible.builtin.systemd:
     name: wazuh-agent
     enabled: true
 
 - name: Reload systemctl
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
   when: not ami_builder 

@@ -16,11 +16,11 @@
       changed_when: false
 
     - name: Verify auth_principals is installed
-      stat:
+      ansible.builtin.stat:
         path: /var/ossec/etc/rootCA.pem
       register: reg_cert
 
     - name: Assert User exists
-      assert:
+      ansible.builtin.assert:
         that:
           - 'reg_cert.stat.exists'
